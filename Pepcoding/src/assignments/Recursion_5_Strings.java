@@ -110,4 +110,18 @@ public class Recursion_5_Strings {
 		} else
 			return ch + recresult;
 	}
+	public static String putChend(String str, int si,char ch,String result) {
+		if (str.length() == 0) {
+			return "";
+		}
+		if (si >= str.length()) {
+			return result;
+		}
+		if (str.charAt(si) != ch) {
+			return result+str.charAt(si)+putChend(str, si+1,ch,result);
+		}
+		else{
+			return result+putChend(str, si+1,ch,result)+ch;
+		}
+	}
 }
