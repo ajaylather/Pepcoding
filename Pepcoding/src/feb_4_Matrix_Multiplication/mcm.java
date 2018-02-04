@@ -29,14 +29,4 @@ public class mcm {
 		}
 		return mincost;
 	}
-
-	public static int lcs(String s1,String s2) {
-		
-		String ros1=s1.substring(1);
-		String ros2=s2.substring(1);
-		
-		lcs(s1,ros1);
-		lcs(ros1,s2);
-		lcs(ros1,ros2);
-	}
 }
