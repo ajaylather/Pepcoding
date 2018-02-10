@@ -27,6 +27,7 @@ public class mcm {
 				mincost=totalcost;
 			}
 		}
+		strg[ei][si]=mincost;
 		return mincost;
 	}
 }
