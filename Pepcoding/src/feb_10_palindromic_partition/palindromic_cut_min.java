@@ -3,49 +3,76 @@ package feb_10_palindromic_partition;
 public class palindromic_cut_min {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println(palindromic_cutting("abbaa",0));
-	}
-//	public static int palindromic_cut_dp(String str,int si,int ei,int [][] strg) {
-//		if(chkpal(str, 0)==true) {
-//			return 0;
-//		}
-//		if(strg[si][ei]!=0) {
-//			return strg[si][ei];
-//		}
-//		int mincost=Integer.MAX_VALUE;
-//		for(int i=si;i<ei;i++) {
-//			int cost1=palindromic_cut_dp(str,si,1,strg);
-//			int cost2=palindromic_cut_dp(str,i,ei,strg);
-//			int totcost=cost1+1+cost2;
-//		}
-//	}
-	public static int palindromic_cutting(String str,int cmsf) {
-		if(str.length()==1) {
-			return 0;
-		}
-		if(chkpal(str, 0)==true) {
-			return 0;
-		}
-		for(int i=1;i<str.length();i++) {
-			cmsf+=1;
-			int cost1=palindromic_cutting(str.substring(0,i),cmsf);
-			int cost2=palindromic_cutting(str.substring(i),cmsf);
-			int totcost=cost1+1+cost2;
-			if(totcost<cmsf) {
-				cmsf=totcost;
+		String str = "abbbbasdaaa";
+		int[][] strg = new int[str.length()][str.length()];
+		boolean[][] presults = new boolean[str.length()][str.length()];
+		//
+		for (int l = 1; l <= str.length(); l++) {
+			int si = 0;
+			int ei = si + l - 1;
+			while (ei < str.length()) {
+				// System.out.println(si + " " + ei);
+				if (l == 1) {
+					presults[si][ei] = true;
+				} else if (l == 2) {
+					presults[si][ei] = str.charAt(si) == str.charAt(ei);
+				} else {
+					if (str.charAt(si) == str.charAt(ei)) {
+						presults[si][ei] = presults[si + 1][ei - 1];
+					}
+				}
+				si++;
+				ei++;
+				counter++;
 			}
 		}
-		return cmsf;
+
+		System.out.println(palindromepartitions(str, 0, str.length() - 1, strg, presults));
+		System.out.println(counter);
 	}
-	public static boolean chkpal(String str, int i) {
-		if (i == str.length() / 2) {
-			return true;
+
+	static int counter = 0;
+
+	// minimum cuts to make each partition a palindrome
+	public static int palindromepartitions(String str, int si, int ei, int[][] strg, boolean[][] presults) {
+		// if(IsPalindrome(str, si, ei)){
+		// return 0;
+		// }
+		if (presults[si][ei] == true) {
+			return 0;
 		}
-		if (str.charAt(i) != str.charAt(str.length() - 1 - i)) {
-			return false;
+
+		if (strg[si][ei] != 0) {
+			return strg[si][ei];
 		}
-		boolean chkpal = chkpal(str, i + 1);
-		return chkpal;
+
+		int min = Integer.MAX_VALUE;
+
+		for (int i = si; i < ei; i++) {
+			int c1 = palindromepartitions(str, si, i, strg, presults);
+			int c2 = palindromepartitions(str, i + 1, ei, strg, presults);
+			int tc = c1 + c2 + 1;
+			if (tc < min) {
+				min = tc;
+			}
+			counter++;
+		}
+
+		strg[si][ei] = min;
+		return min;
+	}
+
+	public static boolean IsPalindrome(String str, int si, int ei) {
+		int left = si, right = ei;
+		while (left < right) {
+			if (str.charAt(left) != str.charAt(right)) {
+				return false;
+			}
+			left++;
+			right--;
+			counter++;
+		}
+
+		return true;
 	}
 }
