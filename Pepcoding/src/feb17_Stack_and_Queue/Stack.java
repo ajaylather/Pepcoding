@@ -1,4 +1,4 @@
-package Feb17_Stack_and_Queue;
+package feb17_Stack_and_Queue;
 
 public class Stack {
 

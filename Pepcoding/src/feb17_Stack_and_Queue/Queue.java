@@ -1,12 +1,14 @@
-package Feb17_Stack_and_Queue;
+package feb17_Stack_and_Queue;
 
 public class Queue {
 	int[] data;
-	int size = 0;
-	int front = 0;
+	int size;
+	int front;
 
 	public Queue(int capacity) {
 		this.data = new int[capacity];
+		this.size = 0;
+		this.front = 0;
 	}
 
 	public Queue() {
@@ -48,14 +50,15 @@ public class Queue {
 			System.out.println("Queue is empty");
 			return 0;
 		}
-		return this.front;
+		return this.data[front];
 	}
 
 	public void display() {
-		for (int i = 0; i <size; i++) {
-			int temp= (i + front) % this.data.length;
+		for (int i = 0; i <this.size; i++) {
+			int temp= (i + this.front) % this.data.length;
 			System.out.print(this.data[temp] + "->");
 		}
 		System.out.println("End");
+		System.out.println("----------------------------");
 	}
 }
