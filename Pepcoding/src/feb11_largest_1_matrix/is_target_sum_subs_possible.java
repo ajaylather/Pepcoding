@@ -1,4 +1,4 @@
-package feb_11_largest_1_matrix;
+package feb11_largest_1_matrix;
 
 public class is_target_sum_subs_possible {
 

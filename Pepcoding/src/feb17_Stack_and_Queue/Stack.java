@@ -1,5 +1,7 @@
 package feb17_Stack_and_Queue;
 
+import java.util.Arrays;
+
 public class Stack {
 
 	int[] data;
@@ -13,6 +15,12 @@ public class Stack {
 		this(5);
 	}
 
+	public Stack(int[] arr) {	//this will add reverse elements in stack
+		this.data=new int[arr.length];
+		//this.data=Arrays.copyOf(arr, arr.length);
+		this.tos=arr.length-1;
+	}
+	
 	public int size() {
 		return this.tos + 1;
 	}

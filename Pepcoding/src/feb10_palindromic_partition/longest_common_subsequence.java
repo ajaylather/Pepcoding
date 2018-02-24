@@ -1,4 +1,4 @@
-package feb_10_palindromic_partition;
+package feb10_palindromic_partition;
 
 public class longest_common_subsequence {
 

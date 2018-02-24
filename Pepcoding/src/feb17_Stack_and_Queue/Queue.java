@@ -1,5 +1,7 @@
 package feb17_Stack_and_Queue;
 
+import java.util.Arrays;
+
 public class Queue {
 	int[] data;
 	int size;
@@ -13,6 +15,12 @@ public class Queue {
 
 	public Queue() {
 		this(5);
+	}
+	
+	public Queue(int[] arr) {
+		this.data=Arrays.copyOf(arr, arr.length);
+		this.size = arr.length;
+		this.front = 0;
 	}
 
 	public int size() {

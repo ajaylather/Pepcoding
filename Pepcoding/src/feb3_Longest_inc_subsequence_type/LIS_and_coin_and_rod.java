@@ -1,4 +1,4 @@
-package feb_3_Longest_inc_subsequence_type;
+package feb3_Longest_inc_subsequence_type;
 
 import java.util.ArrayList;
 import java.util.Arrays;

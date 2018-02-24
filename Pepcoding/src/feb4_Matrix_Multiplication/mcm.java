@@ -1,4 +1,4 @@
-package feb_4_Matrix_Multiplication;
+package feb4_Matrix_Multiplication;
 
 import java.util.Arrays;
 
