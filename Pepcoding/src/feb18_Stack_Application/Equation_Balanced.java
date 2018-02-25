@@ -4,12 +4,12 @@ import feb17_Stack_and_Queue.Stack;
 
 public class Equation_Balanced {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		// TODO Auto-generated method stub
 		String str="{[c+d][a+b])}";
 		System.out.println(isEqnBal(str));
 	}
-	public static boolean isEqnBal(String str) {
+	public static boolean isEqnBal(String str) throws Exception{
 		Stack st=new Stack(str.length());
 		for(int i=0;i<str.length();i++) {
 			char ch=str.charAt(i);

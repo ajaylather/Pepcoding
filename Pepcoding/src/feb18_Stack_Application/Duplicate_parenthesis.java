@@ -4,13 +4,13 @@ import feb17_Stack_and_Queue.Stack;
 
 public class Duplicate_parenthesis {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		// TODO Auto-generated method stub
 		String str = "(((a+b)+c)+d)";
 		System.out.println(isParenDupl(str));
 	}
 
-	public static boolean isParenDupl(String str) {
+	public static boolean isParenDupl(String str) throws Exception{
 		Stack st = new Stack(str.length());
 
 		for (int i = 0; i < str.length(); i++) {

@@ -2,7 +2,7 @@ package feb18_Stack_Application;
 import feb17_Stack_and_Queue.*;
 public class Queue_reverse {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		// TODO Auto-generated method stub
 		int[] arr= {1,2,3,4,5};
 		Queue qu=new Queue(arr); 
@@ -21,7 +21,7 @@ public class Queue_reverse {
 		StackReverseUsingQueue(st1, qu1);
 		st1.display();
 	}
-	public static void QueueReverseUsingStack(Queue qu,Stack st) {
+	public static void QueueReverseUsingStack(Queue qu,Stack st) throws Exception{
 		if(qu.size()==0) {
 			return;
 		}
@@ -30,12 +30,16 @@ public class Queue_reverse {
 		qu.enQueue(st.pop());
 	}
 	
-	public static void StackReverseUsingQueue(Stack st,Queue qu) {
+	public static void StackReverseUsingQueue(Stack st,Queue qu) throws Exception{
 		if(st.size()==0) {
 			return;
 		}
 		qu.enQueue(st.pop());
 		StackReverseUsingQueue(st, qu);
 		st.push(qu.deQueue());
+	}
+	
+	public static void StackReverseUsingStack() {
+		
 	}
 }

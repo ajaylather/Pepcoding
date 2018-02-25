@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Stack_client {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		// TODO Auto-generated method stub
         Scanner scn=new Scanner(System.in);
 		int capacity=scn.nextInt();

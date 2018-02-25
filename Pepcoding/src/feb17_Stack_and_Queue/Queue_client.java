@@ -2,7 +2,7 @@ package feb17_Stack_and_Queue;
 
 public class Queue_client {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		// TODO Auto-generated method stub
 		Queue que=new Queue();
 		que.enQueue(10);

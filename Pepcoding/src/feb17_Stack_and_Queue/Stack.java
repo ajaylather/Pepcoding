@@ -33,19 +33,17 @@ public class Stack {
 		return this.size() == 0;
 	}
 
-	public void push(int value) {
+	public void push(int value) throws Exception{
 		if (this.tos == this.data.length - 1) {
-			System.out.println("Stack Is Full");
-			return;
+			throw new Exception("Stack Is Full");
 		}
 		this.tos++;
 		this.data[this.tos] = value;
 	}
 
-	public int pop() {
+	public int pop() throws Exception{
 		if (this.tos == -1) {
-			System.out.println("Stack Is Empty");
-			return 0;
+			throw new Exception("Stack Is Empty");
 		}
 		int deldata = this.data[this.tos];
 		this.data[this.tos] = 0;
@@ -53,10 +51,9 @@ public class Stack {
 		return deldata;
 	}
 
-	public int top() {
+	public int top() throws Exception{
 		if (isEmpty()) {
-			System.out.println("Stack is Empty");
-			return 0;
+			throw new Exception("Stack Is Empty");
 		}
 		return this.data[this.tos];
 	}

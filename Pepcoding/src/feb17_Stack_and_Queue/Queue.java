@@ -31,20 +31,18 @@ public class Queue {
 		return this.size == 0;
 	}
 
-	public void enQueue(int value) {
+	public void enQueue(int value) throws Exception{
 		if (this.size == this.data.length) {
-			System.out.println("Queue is full");
-			return;
+			throw new Exception("Queue is full");
 		}
 		int tail = (front + size) % this.data.length;
 		this.data[tail] = value;
 		this.size++;
 	}
 
-	public int deQueue() {
+	public int deQueue() throws Exception{
 		if (isEmpty()) {
-			System.out.println("Queue is empty");
-			return 0;
+			throw new Exception("Queue is empty");
 		}
 		int delval = this.data[this.front];
 		this.data[this.front] = 0;
@@ -53,10 +51,9 @@ public class Queue {
 		return delval;
 	}
 
-	public int front() {
+	public int front() throws Exception{
 		if (isEmpty()) {
-			System.out.println("Queue is empty");
-			return 0;
+			throw new Exception("Queue is empty");
 		}
 		return this.data[front];
 	}
