@@ -144,4 +144,111 @@ public class GenericTree {
 		}
 		return false;
 	}
+	
+	public void mirror(){
+		mirror(root);
+	}
+	
+	private void mirror(Node node){
+		for(Node child: node.children){
+			mirror(child);
+		}
+		
+		
+		int left = 0; 
+		int right = node.children.size() - 1;
+		while(left < right){
+			Node lnode = node.children.get(left);
+			Node rnode = node.children.get(right);
+			node.children.set(left, rnode);
+			node.children.set(right, lnode);
+			
+			left++;
+			right--;
+		}
+	}
+
+	public void removeLeaves(){
+		this.removeLeaves(root);
+	}
+	
+	private void removeLeaves(Node node){
+		for(int i = node.children.size() - 1; i >= 0; i--){
+			Node child = node.children.get(i);
+			
+			if(child.children.size() == 0){
+				node.children.remove(i);
+			}
+		}
+		
+		for(Node child: node.children){
+			removeLeaves(child);
+		}
+	}
+
+	public void linearize(){
+		linearize(root);
+	}
+	
+	private void linearize(Node node){
+		for(Node child: node.children){
+			linearize(child);
+		}
+
+		while(node.children.size() > 1){
+			Node lnode = node.children.remove(node.children.size() - 1);
+			Node slnode = node.children.get(node.children.size() - 1);
+			Node slkitail = getTail(slnode);
+			slkitail.children.add(lnode);
+		}
+	}
+
+	public void linearizeeff(){
+		linearizeeff(root);
+	}
+	
+	private Node linearizeeff(Node node){
+		if(node.children.size() == 0){
+			return node;
+		}
+		
+		Node tail = linearizeeff(
+						node.children.get(node.children.size() - 1));
+		for(int i = node.children.size() - 2; i >= 0; i--){
+			Node currkitail = linearizeeff(node.children.get(i));
+			currkitail.children.add(node.children.get(i + 1));
+			node.children.remove(i + 1);
+		}
+		
+		return tail;
+	}
+
+	private Node getTail(Node node){
+		if(node.children.size() == 0){
+			return node;
+		} else {
+			return getTail(node.children.get(0));
+		}
+	}
+
+	public void flatten(){
+		flatten(root);
+	}
+	
+	private void flatten(Node node){
+		for(Node child: node.children){
+			flatten(child);
+		}
+		
+		ArrayList<Node> newlistofc = new ArrayList<GenericTree.Node>();
+		for(Node child: node.children){
+			newlistofc.add(child);
+			for(Node gc: child.children){
+				newlistofc.add(gc);
+			}
+			child.children.clear();
+		}
+		
+		node.children = newlistofc;
+	}
 }
