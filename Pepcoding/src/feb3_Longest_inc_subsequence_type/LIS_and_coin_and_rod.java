@@ -85,7 +85,7 @@ public class LIS_and_coin_and_rod {
 				}
 			}
 		}
-		System.out.println(strg[strg.length-1]);
+		//System.out.println(strg[strg.length-1]);
 		for(int i=0;i<pstrg[amount].size();i++) {
 			System.out.println(pstrg[amount].get(i));
 		}

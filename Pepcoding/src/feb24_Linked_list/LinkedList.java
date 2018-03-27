@@ -1,4 +1,4 @@
-package feb24_LInked_list;
+package feb24_Linked_list;
 
 public class LinkedList {
 	public class Node {

@@ -1,6 +1,6 @@
-package feb24_LInked_list;
+package feb24_Linked_list;
 
-public class LInkedLIst_Client {
+public class LinkedList_Client {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub

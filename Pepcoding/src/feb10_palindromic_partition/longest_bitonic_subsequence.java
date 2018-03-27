@@ -5,9 +5,9 @@ public class longest_bitonic_subsequence {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int[] arr= {1,11,2,10,4,5,2,1};
-		lds(arr);
+		lbs(arr);
 	}
-	public static void lds(int[] arr) {
+	public static void lbs(int[] arr) {
 		int l = arr.length;
 		int[] lis = new int[l];
 		int[] lds = new int[l];

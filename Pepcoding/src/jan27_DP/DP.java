@@ -10,20 +10,20 @@ public class DP {
 		// TODO Auto-generated method stub
 		TimeTaken.startAlgo();
 		int[][] cost = { { 2, 1, 3, 4 }, { 2, 4, 2, 0 }, { 0, 1, 2, 6 }, { 5, 40, 3, 2 } };
-		// int[] strg = new int[52];
-		// System.out.println(FibRI(47,strg));
-		// System.out.println(FIbItr(43));
-		// System.out.println(FibSlider(43));
-		// System.out.println(CBPItr(10));
-		// System.out.println(CBPSlider(10));
-		// System.out.println(CMP(3, 3));
-		// System.out.println(CMPSlider(3, 3));
-		// System.out.println(CMPDItr(3, 3));
-		// System.out.println(CMPDItrSir(3, 3));
-		// System.out.println(CMPDSlider(3, 3));
-		// System.out.println(MPMinCostPath(cost, 3, 3));
-		System.out.println(MPMinCostSir(cost));
-		// System.out.println(TimeTaken.endAlgo());
+		 int[] strg = new int[52];
+//		 System.out.println(FibRI(47,strg));
+//		 System.out.println(FIbItr(43));
+//		 System.out.println(FibSlider(43));
+//		 System.out.println(CBPItr(10));
+//		 System.out.println(CBPSlider(10));
+//		 System.out.println(CMP(3, 3));
+//		 System.out.println(CMPSlider(3, 3));
+//		 System.out.println(CMPDItr(3, 3));
+//		 System.out.println(CMPDItrSir(3, 3));
+//		 System.out.println(CMPDSlider(3, 3));
+//		 System.out.println(MPMinCostPath(cost, 3, 3));
+//		 System.out.println(MPMinCostSir(cost));
+//		 System.out.println(TimeTaken.endAlgo());
 	}
 
 	public static int FibRI(int n, int[] strg) {
@@ -102,7 +102,7 @@ public class DP {
 		int[] slider = new int[dc + 1];
 		Arrays.fill(slider, 1);
 		for (int rslider = 1; rslider <= dr; rslider++) {
-			for (int col = dc - 1; col <= dc; col--) {
+			for (int col = dc - 1; col >= 0; col--) {
 				int newval = slider[col] + slider[col + 1];
 				slider[col] = newval;
 			}
