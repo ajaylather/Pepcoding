@@ -1,67 +1,31 @@
-package mar18_BinaryTree;
+package apr1_BST;
 
 import java.util.*;
 
-import apr1_BST.BST.Node;
-
-public class BinaryTree {
-	private class Node {
+public class BST {
+	public class Node {
 		int data;
 		Node left;
 		Node right;
 	}
 
-	private Node root;
+	public Node root;
 	int size;
 
-	public BinaryTree() {
-		this.root = takeInput(new Scanner(System.in), null, false);
+	public BST(int[] sa) {
+		this.root = construct(sa, 0, sa.length - 1);
 	}
 
-	public BinaryTree(int[] preOrder, int[] inOrder) {
-		this.root = this.construct(preOrder, inOrder, 0, preOrder.length - 1, 0, inOrder.length - 1);
-	}
-
-	public BinaryTree(int[] postOrder, int[] inOrder, int i) {
-		this.root = this.construct2(postOrder, inOrder, 0, postOrder.length - 1, 0, inOrder.length - 1);
-	}
-
-	private Node takeInput(Scanner scn, Node parent, boolean ilc) {
-
-		if (parent == null) {
-			System.out.println("Enter the data for root node");
-		} else {
-			if (ilc == true) {
-				System.out.println("Enter the data for left child of " + parent.data);
-			} else {
-				System.out.println("Enter the data for right child of " + parent.data);
-			}
+	private Node construct(int[] sa, int lo, int hi) {
+		if (lo > hi) {
+			return null;
 		}
-
-		Node child = new Node();
-		int data = scn.nextInt();
-		child.data = data;
-		this.size++;
-
-		System.out.println("Do you have any left child?");
-		boolean hlc = scn.nextBoolean();
-
-		if (hlc == true) {
-			child.left = takeInput(scn, child, true);
-		} else {
-			child.left = null;
-		}
-
-		System.out.println("Do you have any right child?");
-		boolean hrc = scn.nextBoolean();
-
-		if (hrc == true) {
-			child.right = takeInput(scn, child, false);
-		} else {
-			child.right = null;
-		}
-
-		return child;
+		Node rootnode = new Node();
+		int mid = (lo + hi) / 2;
+		rootnode.data = sa[mid];
+		rootnode.left = construct(sa, lo, mid - 1);
+		rootnode.right = construct(sa, mid + 1, hi);
+		return rootnode;
 	}
 
 	public int size() {
@@ -101,6 +65,81 @@ public class BinaryTree {
 		display(node.right);
 	}
 
+	public void add(int data) {
+		if (this.root == null) {
+			this.root = new Node();
+			root.data = data;
+			this.size++;
+		} else
+			add(this.root, data);
+	}
+
+	private void add(Node node, int data) {
+		if (data < node.data) {
+			if (node.left == null) {
+				node.left = new Node();
+				node.left.data = data;
+				this.size++;
+			} else {
+				add(node.left, data);
+			}
+		} else if (data > node.data) {
+			if (node.right == null) {
+				node.right = new Node();
+				node.right.data = data;
+				this.size++;
+			} else {
+				add(node.right, data);
+			}
+		} else
+			return;
+	}
+
+	public void remove(int data) {
+		this.remove(null, this.root, false, data);
+	}
+
+	private void remove(Node parent, Node child, boolean ilc, int data) {
+		if (child.data == data) {
+			// work area
+			if (child.left == null && child.right == null) {
+				if (ilc) {
+					parent.left = null;
+				} else {
+					parent.right = null;
+				}
+				this.size--;
+			}
+			else if (child.left == null ^ child.right == null) {
+				if (child.left == null) {
+					if (ilc) {
+						parent.left = child.right;
+					} else {
+						parent.right = child.right;
+					}
+				} else {
+					if (ilc) {
+						parent.left = child.left;
+					} else {
+						parent.right = child.left;
+					}
+				}
+				this.size--;
+			} 
+			else {
+				int lkamax = max(child.left);
+				child.data = lkamax;
+				remove(child, child.left, true, lkamax);
+			}
+
+		}
+		if (data < child.data) {
+			remove(child, child.left, true, data);
+		} else if (data > child.data) {
+			remove(child, child.right, false, data);
+		}
+	}
+
 	public int size2() {
 		return this.size2(this.root);
 	}
@@ -123,13 +162,11 @@ public class BinaryTree {
 	}
 
 	private int max(Node node) {
-		if (node == null) {
-			return Integer.MIN_VALUE;
+		if (node.right != null) {
+			return max(node.right);
+		} else {
+			return node.data;
 		}
-		int lkamax = max(node.left);
-		int rkamax = max(node.right);
-		int max = Math.max(node.data, Math.max(lkamax, rkamax));
-		return max;
 	}
 
 	public int height() {
@@ -154,8 +191,13 @@ public class BinaryTree {
 		if (node == null) {
 			return false;
 		}
-		boolean rv = node.data == data || find(data, node.left) || find(data, node.right);
-		return rv;
+		if (data > node.data) {
+			return find(data, node.right);
+		} else if (data < node.data) {
+			return find(data, node.left);
+		} else {
+			return true;
+		}
 	}
 
 	public void preOrder() {
@@ -208,7 +250,7 @@ public class BinaryTree {
 	}
 
 	public void preOrderIter() {
-		LinkedList<Pair> stack = new LinkedList<BinaryTree.Pair>();
+		LinkedList<Pair> stack = new LinkedList<BST.Pair>();
 		Pair rootp = new Pair();
 		rootp.node = root;
 
@@ -241,7 +283,7 @@ public class BinaryTree {
 	}
 
 	public void postOrderIter() {
-		LinkedList<Pair> stack = new LinkedList<BinaryTree.Pair>();
+		LinkedList<Pair> stack = new LinkedList<BST.Pair>();
 		Pair rootp = new Pair();
 		rootp.node = root;
 
@@ -274,7 +316,7 @@ public class BinaryTree {
 	}
 
 	public void inOrderIter() {
-		LinkedList<Pair> stack = new LinkedList<BinaryTree.Pair>();
+		LinkedList<Pair> stack = new LinkedList<BST.Pair>();
 		Pair rootp = new Pair();
 		rootp.node = root;
 
@@ -312,7 +354,7 @@ public class BinaryTree {
 	}
 
 	public void levelOrderIter() {
-		LinkedList<levelPair> queue = new LinkedList<BinaryTree.levelPair>();
+		LinkedList<levelPair> queue = new LinkedList<BST.levelPair>();
 		levelPair rootp = new levelPair();
 		rootp.node = this.root;
 		queue.addLast(rootp);
@@ -427,142 +469,19 @@ public class BinaryTree {
 		return mp;
 	}
 
-	private class bstPair {
-		int min;
-		int max;
-		boolean IsBST;
+	public int lcaTree(int d1, int d2) {// least common ancestor using properties of tree
+		return this.lcaTree(d1, d2, this.root).data;
 	}
 
-	public boolean isBST() {
-		return this.isBST(this.root).IsBST;
-	}
-
-	private bstPair isBST(Node node) {
-		if (node == null) {
-			bstPair bp = new bstPair();
-			bp.min = Integer.MAX_VALUE;
-			bp.max = Integer.MIN_VALUE;
-			bp.IsBST = true;
-			return bp;
-		}
-		bstPair lp = isBST(node.left);
-		bstPair rp = isBST(node.right);
-		bstPair mp = new bstPair();
-		int lmin = lp.min;
-		int lmax = lp.max;
-		int rmin = rp.min;
-		int rmax = rp.max;
-
-		mp.min = Math.min(node.data, Math.min(lmin, rmin));
-		mp.max = Math.max(node.data, Math.max(lmax, rmax));
-		mp.IsBST = lp.IsBST == true && rp.IsBST == true && (node.data > lp.max && node.data < rp.min);
-		return mp;
-	}
-
-	private class largestBSTPair {
-		boolean IsBST;
-		int min;
-		int max;
-		Node largestBSTroot;
-		int largestBSTsize;
-
-	}
-
-	public void largestBST() {
-		System.out.println(largestBST(this.root).largestBSTroot.data);
-		System.out.println(largestBST(this.root).largestBSTsize);
-	}
-
-	private largestBSTPair largestBST(Node node) {
-		if (node == null) {
-			largestBSTPair bp = new largestBSTPair();
-			bp.min = Integer.MAX_VALUE;
-			bp.max = Integer.MIN_VALUE;
-			bp.IsBST = true;
-			return bp;
-		}
-		largestBSTPair lp = largestBST(node.left);
-		largestBSTPair rp = largestBST(node.right);
-		largestBSTPair mp = new largestBSTPair();
-		int lmin = lp.min;
-		int lmax = lp.max;
-		int rmin = rp.min;
-		int rmax = rp.max;
-
-		mp.min = Math.min(node.data, Math.min(lmin, rmin));
-		mp.max = Math.max(node.data, Math.max(lmax, rmax));
-		mp.IsBST = lp.IsBST == true && rp.IsBST == true && (node.data > lp.max && node.data < rp.min);
-
-		if (mp.IsBST == true) {
-			mp.largestBSTroot = node;
-			mp.largestBSTsize = lp.largestBSTsize + rp.largestBSTsize + 1;
-		} else {
-			if (lp.largestBSTsize > rp.largestBSTsize) {
-				mp.largestBSTroot = lp.largestBSTroot;
-				mp.largestBSTsize = lp.largestBSTsize;
-			} else {
-				mp.largestBSTroot = rp.largestBSTroot;
-				mp.largestBSTsize = rp.largestBSTsize;
-			}
-		}
-		return mp;
-	}
-
-	private Node construct(int[] pre, int[] in, int psi, int pei, int insi, int inei) {
-		if (psi > pei || insi > inei) {
-			return null;
-		}
-
-		Node rootnode = new Node();
-		int idx = -1;
-		for (int i = insi; i <= inei; i++) {
-			idx = i;
-			if (pre[psi] == in[i]) {
-				break;
-			}
-		}
-
-		int numOfLeftElements = idx - insi;
-		rootnode.data = in[idx];// data present at idx in inorder
-		rootnode.left = this.construct(pre, in, psi + 1, psi + numOfLeftElements, insi, idx - 1);
-		rootnode.right = this.construct(pre, in, psi + numOfLeftElements + 1, pei, idx + 1, inei);
-		return rootnode;
-	}
-
-	private Node construct2(int[] post, int[] in, int psi, int pei, int insi, int inei) {
-		if (psi > pei || insi > inei) {
-			return null;
-		}
-
-		Node rootnode = new Node();
-		int idx = -1;
-		for (int i = insi; i <= inei; i++) {
-			idx = i;
-			if (post[pei] == in[i]) {
-				break;
-			}
-		}
-
-		int numOfElements = idx - insi;
-		rootnode.data = post[pei];// data present at idx in inorder
-		rootnode.right = this.construct2(post, in, psi + numOfElements, pei - 1, idx + 1, inei);
-		rootnode.left = this.construct2(post, in, psi, psi + numOfElements - 1, insi, idx - 1);
-		return rootnode;
-	}
-
-	public int lca(int d1, int d2) {
-		return this.lca(d1, d2, this.root).data;
-	}
-
-	private Node lca(int d1, int d2, Node node) {
+	private Node lcaTree(int d1, int d2, Node node) {
 		if (node == null) {
 			return null;
 		}
 		if (node.data == d1 || node.data == d2) {
 			return node;
 		}
-		Node llca = this.lca(d1, d2, node.left);
-		Node rlca = this.lca(d1, d2, node.right);
+		Node llca = this.lcaTree(d1, d2, node.left);
+		Node rlca = this.lcaTree(d1, d2, node.right);
 		if (llca != null && rlca != null) {
 			return node;
 		} else if (llca != null) {
@@ -571,6 +490,20 @@ public class BinaryTree {
 			return rlca;
 		} else {
 			return null;
+		}
+	}
+
+	public void lcaBST(int d1, int d2) {// least common ancestor using properties of tree
+		this.lcaBST(d1, d2, this.root);
+	}
+
+	private void lcaBST(int d1, int d2, Node node) {
+		if (node.data < d1 && node.data < d2) {
+			lcaBST(d1, d2, node.right);
+		} else if (node.data > d1 && node.data > d2) {
+			lcaBST(d1, d2, node.left);
+		} else {
+			System.out.println(node.data);
 		}
 	}
 
@@ -643,34 +576,6 @@ public class BinaryTree {
 		return new ArrayList<Integer>();
 	}
 
-	public void pairSumTarget(int targetSum) {
-		ArrayList<Integer> list=new ArrayList<>();
-		this.pairSumTarget(targetSum,this.root,list);
-		Collections.sort(list);		// not required if tree is bst
-		int left=0;
-		int right=list.size()-1;
-		while(left<right) {
-			if(list.get(left)+list.get(right)>targetSum) {
-				right--;
-			}else if(list.get(left)+list.get(right)<targetSum) {
-				left++;
-			}else {
-				System.out.println(list.get(left)+" "+list.get(right));
-				left++;
-				right--;
-			}
-		}
-	}
-
-	private void pairSumTarget(int targetSum, Node node,ArrayList<Integer> list) {
-		if(node==null) {
-			return;
-		}
-		pairSumTarget(targetSum,node.left,list);
-		list.add(node.data);
-		pairSumTarget(targetSum,node.right,list);
-	}
-	
 	public void targetLeafPath(int tar) {
 		this.targetLeafPath(this.root, tar, 0, "");
 	}
@@ -689,5 +594,75 @@ public class BinaryTree {
 		targetLeafPath(node.left, tar, ssf + node.data, psf + " " + node.data);
 		targetLeafPath(node.right, tar, ssf + node.data, psf + " " + node.data);
 	}
-	
+
+	public void printInRange(int lo, int hi) {
+		this.printInRange(this.root, lo, hi);
+	}
+
+	private void printInRange(Node node, int lo, int hi) {
+		if (node == null) {
+			return;
+		}
+		if (node.data < lo) {
+			printInRange(node.right, lo, hi);
+		} else if (node.data > lo && node.data < hi) {
+			printInRange(node.left, lo, hi);
+			System.out.println(node.data);
+			printInRange(node.right, lo, hi);
+		} else
+			printInRange(node.left, lo, hi);
+		// if (node.data > hi) {
+		// printInRange(node.left, lo, hi);
+		// }
+
+	}
+
+	public class heapMover {
+		int sum;
+	}
+
+	public void replaceWithSumOfLargerNodes() {
+		heapMover mover = new heapMover();
+		mover.sum = 0;
+		this.replaceWithSumOfLargerNodes(mover, this.root);
+	}
+
+	private void replaceWithSumOfLargerNodes(heapMover mover, Node node) {
+		if (node == null) {
+			return;
+		}
+		replaceWithSumOfLargerNodes(mover, node.right);
+		int temp = node.data;
+		node.data = mover.sum;
+		mover.sum += temp;
+		replaceWithSumOfLargerNodes(mover, node.left);
+	}
+
+	public void pairSumTarget(int targetSum) {
+		ArrayList<Integer> list = new ArrayList<>();
+		this.pairSumTarget(targetSum, this.root, list);
+		// Collections.sort(list); //required only if tree is binary tree
+		int left = 0;
+		int right = list.size() - 1;
+		while (left < right) {
+			if (list.get(left) + list.get(right) > targetSum) {
+				right--;
+			} else if (list.get(left) + list.get(right) < targetSum) {
+				left++;
+			} else {
+				System.out.println(list.get(left) + " " + list.get(right));
+				left++;
+				right--;
+			}
+		}
+	}
+
+	private void pairSumTarget(int targetSum, Node node, ArrayList<Integer> list) {
+		if (node == null) {
+			return;
+		}
+		pairSumTarget(targetSum, node.left, list);
+		list.add(node.data);
+		pairSumTarget(targetSum, node.right, list);
+	}
 }
