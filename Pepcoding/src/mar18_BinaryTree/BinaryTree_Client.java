@@ -13,10 +13,14 @@ public class BinaryTree_Client {
 		 int[] postOrder={12,37,25,62,87,75,50};
 		 int[] inOrder1= {10,12,15,25,37,50,62,75,87};
 		 int[] postOrder1= {10,15,12,37,25,62,87,75,50};
+		 int[] preOrder2= {10,20,40,50,80,120,140,150,90,100,230,240,110,160,180,190,200,210,170,30,60,70};
+		 int[] inOrder2= {40,20,140,120,150,80,50,230,100,240,90,180,160,200,190,210,110,170,10,60,30,70};
 		 
 //		 BinaryTree bt=new BinaryTree(preOrder,inOrder);
-		 BinaryTree bt1=new BinaryTree(postOrder1,inOrder1,0);
+//		 BinaryTree bt1=new BinaryTree(postOrder1,inOrder1,0);
 //		 BinaryTree bt=new BinaryTree();
+		 BinaryTree bt2=new BinaryTree(preOrder2,inOrder2);
+		 bt2.printKfar(110, 3);
 		 
 //		 bt.display();
 //		 bt1.display();
@@ -47,7 +51,7 @@ public class BinaryTree_Client {
 //		 ArrayList<Integer> pathfromroot=bt1.pathFromRoot(15);
 //		 System.out.println(pathfromroot);
 //		 bt1.display();
-		 bt1.targetLeafPath(102);
+//		 bt1.targetLeafPath(102);
 	}
 
 	static class levelPair {

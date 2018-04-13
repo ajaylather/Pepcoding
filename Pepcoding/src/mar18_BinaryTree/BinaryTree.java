@@ -643,34 +643,56 @@ public class BinaryTree {
 		return new ArrayList<Integer>();
 	}
 
+	private ArrayList<Node> pathFromRootInNodes(Node node, int data) {
+		if (node == null) {
+			return new ArrayList<Node>();
+		}
+		if (node.data == data) {
+			ArrayList<Node> br = new ArrayList<Node>();
+			br.add(node);
+			return br;
+		}
+		ArrayList<Node> lp = pathFromRootInNodes(node.left, data);
+		if (lp.size() > 0) {
+			lp.add(node);
+			return lp;
+		}
+		ArrayList<Node> rp = pathFromRootInNodes(node.right, data);
+		if (rp.size() > 0) {
+			rp.add(node);
+			return rp;
+		}
+		return new ArrayList<Node>();
+	}
+
 	public void pairSumTarget(int targetSum) {
-		ArrayList<Integer> list=new ArrayList<>();
-		this.pairSumTarget(targetSum,this.root,list);
-		Collections.sort(list);		// not required if tree is bst
-		int left=0;
-		int right=list.size()-1;
-		while(left<right) {
-			if(list.get(left)+list.get(right)>targetSum) {
+		ArrayList<Integer> list = new ArrayList<>();
+		this.pairSumTarget(targetSum, this.root, list);
+		Collections.sort(list); // not required if tree is bst
+		int left = 0;
+		int right = list.size() - 1;
+		while (left < right) {
+			if (list.get(left) + list.get(right) > targetSum) {
 				right--;
-			}else if(list.get(left)+list.get(right)<targetSum) {
+			} else if (list.get(left) + list.get(right) < targetSum) {
 				left++;
-			}else {
-				System.out.println(list.get(left)+" "+list.get(right));
+			} else {
+				System.out.println(list.get(left) + " " + list.get(right));
 				left++;
 				right--;
 			}
 		}
 	}
 
-	private void pairSumTarget(int targetSum, Node node,ArrayList<Integer> list) {
-		if(node==null) {
+	private void pairSumTarget(int targetSum, Node node, ArrayList<Integer> list) {
+		if (node == null) {
 			return;
 		}
-		pairSumTarget(targetSum,node.left,list);
+		pairSumTarget(targetSum, node.left, list);
 		list.add(node.data);
-		pairSumTarget(targetSum,node.right,list);
+		pairSumTarget(targetSum, node.right, list);
 	}
-	
+
 	public void targetLeafPath(int tar) {
 		this.targetLeafPath(this.root, tar, 0, "");
 	}
@@ -689,5 +711,44 @@ public class BinaryTree {
 		targetLeafPath(node.left, tar, ssf + node.data, psf + " " + node.data);
 		targetLeafPath(node.right, tar, ssf + node.data, psf + " " + node.data);
 	}
-	
+
+	private void printKdown(Node node, int k) {
+		if (node == null || k < 0) {
+			return;
+		}
+		if (k == 0) {
+			System.out.print(node.data + " ");
+			return;
+		}
+		printKdown(node.left, k - 1);
+		printKdown(node.right, k - 1);
+	}
+
+	public void printKfar(int data, int k) {
+
+		ArrayList<Node> pathFromRoot = pathFromRootInNodes(root, data);
+		ArrayList<Boolean> directionlist = new ArrayList<Boolean>();
+		directionlist.add(null);
+
+		for (int i = 1; i < pathFromRoot.size(); i++) {
+			Node parent = pathFromRoot.get(i);
+			Node child = pathFromRoot.get(i - 1);
+			directionlist.add(parent.left == child);
+		}
+
+		for (int i = 0; i < pathFromRoot.size(); i++) {
+			Node temp = pathFromRoot.get(i);
+			if (i == 0) {
+				printKdown(temp, k);
+			} else if (k == i) {
+				System.out.println(temp.data);
+			} else {
+				if (directionlist.get(i) == false) {
+					printKdown(temp.left, k - i - 1);
+				} else {
+					printKdown(temp.right, k - i - 1);
+				}
+			}
+		}
+	}
 }
