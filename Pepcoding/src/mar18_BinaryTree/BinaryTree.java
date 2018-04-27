@@ -336,6 +336,20 @@ public class BinaryTree {
 		}
 	}
 
+	public int sumOfAllNodes() {
+		return this.sumOfAllNodes(this.root);
+	}
+
+	private int sumOfAllNodes(Node node) {
+		if (node == null) {
+			return 0;
+		}
+		int sum=node.data;
+		int sumleft=sumOfAllNodes(node.left);
+		int sumright=sumOfAllNodes(node.right);
+		return sum+sumleft+sumright;
+	}
+	
 	public int diameter() {
 		return this.diameter(this.root);
 	}

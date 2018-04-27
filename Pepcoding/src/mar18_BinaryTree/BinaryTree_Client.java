@@ -19,8 +19,8 @@ public class BinaryTree_Client {
 //		 BinaryTree bt=new BinaryTree(preOrder,inOrder);
 //		 BinaryTree bt1=new BinaryTree(postOrder1,inOrder1,0);
 //		 BinaryTree bt=new BinaryTree();
-		 BinaryTree bt2=new BinaryTree(preOrder2,inOrder2);
-		 bt2.printKfar(110, 3);
+		 BinaryTree bt2=new BinaryTree(preOrder,inOrder);
+//		 bt2.printKfar(110, 3);
 		 
 //		 bt.display();
 //		 bt1.display();
@@ -52,6 +52,8 @@ public class BinaryTree_Client {
 //		 System.out.println(pathfromroot);
 //		 bt1.display();
 //		 bt1.targetLeafPath(102);
+		 bt2.display();
+		 System.out.println(bt2.sumOfAllNodes());
 	}
 
 	static class levelPair {
