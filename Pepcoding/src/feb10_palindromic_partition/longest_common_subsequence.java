@@ -10,8 +10,8 @@ public class longest_common_subsequence {
 	}
 	public static void lcs(String s1,String s2) {
 		int[][] board= new int[s1.length()+1][s2.length()+1];
-		for(int row=s2.length()-1;row>=0;row++) {
-			for(int col=s1.length()-1;col>=0;col++) {
+		for(int row=s2.length()-1;row>=0;row--) {
+			for(int col=s1.length()-1;col>=0;col--) {
 				if(s1.charAt(col)==s2.charAt(row)) {
 					board[row][col]=board[row+1][col+1]+1;
 				}else {

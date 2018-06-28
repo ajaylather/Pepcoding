@@ -6,7 +6,7 @@ public class Sieve_Prime {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		printSOE(100);
+		printSOE(7507);
 	}
 
 	public static void printSOE(int n) {
@@ -20,7 +20,7 @@ public class Sieve_Prime {
 				}
 			}
 		}
-		for (int i = 0; i < primes.length - 1; i++) {
+		for (int i = 0; i <= primes.length - 1; i++) {
 			if (primes[i] == true) {
 				System.out.println(i);
 			}
